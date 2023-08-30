@@ -25,6 +25,23 @@ window.addEventListener("load" ,()=>{
      
     //control
     const randomizedButton= document.getElementById("randomizebutton")
+    const slider_spread= document.getElementById("spread")
+    const label_spread =document.querySelector('[for=" spread"]')
+    slider_spread.addEventListener('change', function(e){
+        console.log(e.target.value)
+        spread=e.target.value
+        updateSlider()
+        drawfractal()
+
+    })
+    const slider_sides= document.getElementById("sides")
+    const label_sides = document.querySelector('[for="sides"]');
+    slider_sides.addEventListener('change', function(e){
+        sides=e.target.value
+        updateSlider()
+        drawfractal()
+
+    })
 
     function drawBranches(level){
         if (level > maxlevel) return;
@@ -42,15 +59,11 @@ window.addEventListener("load" ,()=>{
             drawBranches(level+1)
             ctx.restore();
 
-
-    
             ctx.save();
             ctx.rotate(-spread)
             drawBranches(level+1)
             ctx.restore();
             ctx.restore();
- 
-
         }
        
     }
@@ -58,14 +71,11 @@ window.addEventListener("load" ,()=>{
         ctx.clearRect(0,0,canvas.width, canvas.height)
         ctx.save();
         ctx.lineWidth=lineWidth;
-
         ctx.strokeStyle= color;
         ctx.translate(canvas.width/2,canvas.height/2)
         for( let i=0; i<sides; i++){
             ctx.rotate((Math.PI*2)/sides);
             drawBranches(0);
-
-
         }
         ctx.restore()
     }
@@ -76,16 +86,25 @@ window.addEventListener("load" ,()=>{
     scale=Math.random()*0.4+0.2;
     spread=Math.random()*2.9+0.1;
     color = 'hsl('+ Math.random()*360 +', 100%, 50%)'
-    let lineWidth = Math.random ()*20+10; 
-
-
-
+    lineWidth = Math.random ()*20+10; 
+    randomizedButton.style.backgroundColor= color;
     }
+
     randomizedButton.addEventListener('click', function(){
-        drawfractal();
         randomizedFractal()
+        updateSlider()
+
+        drawfractal();
 
     });
+    
+    function updateSlider(){
+        slider_spread.value=spread;
+        label_spread.innerText= 'spread:' + Number(spread.toFixed(2));
+        slider_sides.value=sides;
+        label_sides.innerText= 'sides:' + sides;
+    } 
+    updateSlider()
 
    
  
