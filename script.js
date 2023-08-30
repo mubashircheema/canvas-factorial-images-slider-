@@ -25,8 +25,9 @@ window.addEventListener("load" ,()=>{
      
     //control
     const randomizedButton= document.getElementById("randomizebutton")
-    const slider_spread= document.getElementById("spread")
-    const label_spread =document.querySelector('[for=" spread"]')
+    const resetButton = document.getElementById("resetbutton");
+    const slider_spread= document.getElementById("spread");
+    const label_spread =document.querySelector('[for="spread"]')
     slider_spread.addEventListener('change', function(e){
         console.log(e.target.value)
         spread=e.target.value
@@ -78,6 +79,8 @@ window.addEventListener("load" ,()=>{
             drawBranches(0);
         }
         ctx.restore()
+        randomizedButton.style.backgroundColor= color;
+
     }
     drawfractal()
 
@@ -93,14 +96,25 @@ window.addEventListener("load" ,()=>{
     randomizedButton.addEventListener('click', function(){
         randomizedFractal()
         updateSlider()
-
         drawfractal();
+      });
 
-    });
-    
+    function resetFacrtoral(){
+        sides=5;
+        scale=0.5;
+        spread=0.5;
+        color = 'hsl(290 , 100%, 50%)'
+        lineWidth = 10 ; 
+    }
+    resetButton.addEventListener('click', function(){
+        resetFacrtoral()
+        updateSlider()
+        drawfractal()
+    })
+ 
     function updateSlider(){
         slider_spread.value=spread;
-        label_spread.innerText= 'spread:' + Number(spread.toFixed(2));
+        label_spread.innerText= 'spread:' + Number(spread).toFixed(2);
         slider_sides.value=sides;
         label_sides.innerText= 'sides:' + sides;
     } 
